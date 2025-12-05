@@ -200,24 +200,122 @@ npx playwright show-report
 
 ## 🌐 Gitpod Setup
 
-### Quick Start
+### Quick Start with Gitpod
 
-Click the button below to open this project in Gitpod:
+Gitpod provides a cloud-based development environment that's pre-configured and ready to use. No local setup required!
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/GKSwami/lambdatest-playwright-automation)
+**Click the button below to open this project in Gitpod:**
 
-### Manual Setup in Gitpod
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/GKSwami/GajananAutomation)
 
-1. Open terminal in Gitpod
-2. Install dependencies: `npm install`
-3. Run tests: `npm test`
-4. View reports: `npm run test:report`
+### What Happens When You Open in Gitpod?
 
-### Features in Gitpod
-- Pre-installed Playwright extensions
-- Automatic dependency installation
-- Pre-configured test environment
-- One-click test execution
+1. **Automatic Workspace Creation**: Gitpod creates a cloud-based VS Code environment
+2. **Dependency Installation**: Automatically runs `npm install`
+3. **Browser Installation**: Installs Chromium, Firefox, and WebKit browsers
+4. **Ready to Test**: Environment is fully configured and ready to run tests
+
+### Running Tests in Gitpod
+
+Once the workspace is ready (you'll see a welcome message in the terminal), you can run:
+
+```bash
+# Run all tests across all browsers
+npm test
+
+# Run tests in specific browser
+npm run test:chrome
+npm run test:firefox
+npm run test:webkit
+
+# Generate and view HTML report
+npm run test:report
+npx playwright show-report
+```
+
+### Viewing Test Reports in Gitpod
+
+After running tests, view the HTML report:
+
+```bash
+npx playwright show-report
+```
+
+Gitpod will automatically open a preview window with the test results.
+
+### Gitpod Configuration Details
+
+The `.gitpod.yml` file configures:
+
+- **Pre-installed Extensions**:
+  - Playwright Test for VS Code
+  - GitLens for Git integration
+  - Prettier for code formatting
+  - ESLint for code quality
+
+- **Automatic Setup**:
+  - Node.js environment
+  - npm dependencies
+  - Playwright browsers with system dependencies
+  - Port forwarding for report viewing
+
+- **Environment Variables**:
+  Set in Gitpod dashboard under Settings → Variables:
+  ```
+  LAMBDA_USERNAME=your_username
+  LAMBDA_ACCESS_KEY=your_access_key
+  ```
+
+### Manual Setup in Gitpod (if needed)
+
+If you need to manually set up or reset the environment:
+
+```bash
+# Install dependencies
+npm install
+
+# Install Playwright browsers
+npx playwright install --with-deps
+
+# Run tests
+npm test
+
+# View reports
+npx playwright show-report
+```
+
+### Gitpod Features
+
+✅ **Zero Configuration**: Everything is pre-configured
+✅ **Cloud-Based**: No local resources needed
+✅ **Consistent Environment**: Same setup for all team members
+✅ **Fast Startup**: Pre-built images for quick initialization
+✅ **Integrated IDE**: Full VS Code experience in browser
+✅ **Port Forwarding**: Automatic preview of test reports
+
+### Troubleshooting in Gitpod
+
+**If tests don't run:**
+```bash
+# Check if browsers are installed
+npx playwright --version
+
+# Reinstall browsers if needed
+npx playwright install --with-deps
+```
+
+**If dependencies are missing:**
+```bash
+# Clean install
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**To view workspace logs:**
+```bash
+# Check Gitpod initialization logs
+cat /workspace/.gitpod/prebuild-log-*
+```
 
 ## 🎪 HyperExecute Integration
 
