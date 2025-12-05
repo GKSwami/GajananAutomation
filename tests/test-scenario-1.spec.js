@@ -12,6 +12,9 @@ test.describe('Scenario 1: Simple Form Demo', () => {
     // Locator 1: Using href attribute selector (direct link)
     await page.click('a[href="https://www.lambdatest.com/selenium-playground/simple-form-demo"]');
     
+    // Wait for page to load completely
+    await page.waitForLoadState('networkidle');
+    
     // Step 3: Validate URL contains "simple-form-demo"
     await expect(page).toHaveURL(/simple-form-demo/);
     console.log(`✓ URL validation passed: ${page.url()}`);

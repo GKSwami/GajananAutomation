@@ -1,14 +1,33 @@
 tasks:
   - name: Setup & Install Dependencies
     init: |
+      echo "🚀 Installing dependencies..."
       npm install
       echo "✓ Dependencies installed"
-      npm run test:report
-      echo "✓ Initial test run completed"
+      echo "📦 Installing Playwright browsers..."
+      npx playwright install --with-deps chromium firefox webkit
+      echo "✓ Playwright browsers installed"
     command: |
-      echo "Workspace ready for testing"
-      echo "Run 'npm test' to execute all tests"
-      echo "Run 'npm run test:local' to run tests in headed mode"
+      echo ""
+      echo "╔════════════════════════════════════════════════════════════╗"
+      echo "║  🎭 Playwright Test Automation - Gitpod Environment       ║"
+      echo "╚════════════════════════════════════════════════════════════╝"
+      echo ""
+      echo "✅ Workspace is ready for testing!"
+      echo ""
+      echo "📋 Available Commands:"
+      echo "  npm test              - Run all tests (headless)"
+      echo "  npm run test:chrome   - Run tests in Chrome only"
+      echo "  npm run test:firefox  - Run tests in Firefox only"
+      echo "  npm run test:webkit   - Run tests in WebKit only"
+      echo "  npm run test:report   - Run tests and show HTML report"
+      echo ""
+      echo "📊 View test results:"
+      echo "  npx playwright show-report"
+      echo ""
+      echo "🔍 Debug tests:"
+      echo "  npm run test:debug"
+      echo ""
 
 vscode:
   extensions:
