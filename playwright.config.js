@@ -26,19 +26,37 @@ export default defineConfig({
     ['junit', { outputFile: 'junit-results.xml' }],
     ['list'],
   ],
+  // Directory where Playwright will store test artifacts (videos, traces, screenshots)
+  outputDir: 'playwright-artifacts',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    // Keep traces for debug and CI investigations
     trace: 'on-first-retry',
 
-    /* Screenshot on failure */
+    // Screenshots on failure
     screenshot: 'only-on-failure',
 
-    /* Video on failure */
+    // Video: keep on failure to reduce storage but still capture useful artifacts
     video: 'retain-on-failure',
+
+    // Timeouts
+    actionTimeout: 30_000,
+    navigationTimeout: 30_000,
+
+    // Ignore cert errors in CI if needed
+    ignoreHTTPSErrors: true,
+
+    // All artifacts (videos/screenshots/traces) will be written under this folder
+    // Playwright will also place per-test artifacts under this outputDir
+    // (this is a top-level option set below as `outputDir`)
+    // Additionally, set context-level recordVideo dir for explicit control
+    contextOptions: {
+      recordVideo: { dir: 'playwright-artifacts/videos' },
+    },
   },
 
   /* Configure projects for major browsers */
