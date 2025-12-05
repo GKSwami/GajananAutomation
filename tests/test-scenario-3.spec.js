@@ -37,13 +37,14 @@ test.describe('Scenario 3: Input Form Submit', () => {
     const emailInput = page.locator('input#inputEmail4');
     await emailInput.fill(testData.email);
     
-    // Fill Phone
-    const phoneInput = page.locator('input#inputPhone');
-    await phoneInput.fill(testData.phone);
-    
-    // Select Country from dropdown using text property
-    const countrySelect = page.locator('select#selectnav');
+    // Select Country from dropdown first (may reveal other fields)
+    const countrySelect = page.locator('select[name="country"]');
     await countrySelect.selectOption({ label: testData.country });
+    
+    // Fill Phone (scroll into view first)
+    const phoneInput = page.locator('input#mobileid');
+    await phoneInput.scrollIntoViewIfNeeded();
+    await phoneInput.fill(testData.phone);
     
     // Click Submit
     await submitButton.click();
