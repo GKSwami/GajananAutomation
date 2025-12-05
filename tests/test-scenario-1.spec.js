@@ -12,6 +12,9 @@ test.describe('Scenario 1: Simple Form Demo', () => {
     // Locator 1: Using href attribute selector (direct link)
     await page.click('a[href="https://www.lambdatest.com/selenium-playground/simple-form-demo"]');
     
+    // Wait for page to load completely
+    await page.waitForLoadState('networkidle');
+    
     // Step 3: Validate URL contains "simple-form-demo"
     await expect(page).toHaveURL(/simple-form-demo/);
     console.log(`✓ URL validation passed: ${page.url()}`);
@@ -22,8 +25,8 @@ test.describe('Scenario 1: Simple Form Demo', () => {
     await messageInput.fill(testMessage);
     
     // Step 6: Click "Get Checked Value" button
-    // Locator 3: Using CSS class selector
-    const getCheckButton = page.locator('button.btn-lg:has-text("Get Checked Value")');
+    // Locator 3: Using ID selector (fixed from incorrect btn-lg class)
+    const getCheckButton = page.locator('#showInput');
     await getCheckButton.click();
     
     // Step 7: Validate message appears in "Your Message:" section
