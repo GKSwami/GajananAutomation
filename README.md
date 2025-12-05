@@ -1,5 +1,7 @@
 # LambdaTest Playwright Automation
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/GKSwami/GajananAutomation)
+
 A comprehensive Playwright test automation project for LambdaTest Selenium Playground with HyperExecute cloud integration, parallel execution, and Gitpod support.
 
 ## 📋 Table of Contents
