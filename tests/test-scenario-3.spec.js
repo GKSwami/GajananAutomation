@@ -5,16 +5,7 @@ test.describe('Scenario 3: Input Form Submit', () => {
   const testData = {
     name: 'John Doe',
     email: 'john.doe@example.com',
-    password: 'SecurePass123!',
-    company: 'LambdaTest Inc',
-    website: 'https://www.lambdatest.com',
-    city: 'San Francisco',
-    address1: '123 Main Street',
-    address2: 'Suite 100',
-    state: 'California',
-    zipcode: '94102',
     phone: '9876543210',
-    message: 'This is a test message',
     country: 'United States',
   };
 
@@ -46,44 +37,12 @@ test.describe('Scenario 3: Input Form Submit', () => {
     const emailInput = page.locator('input#inputEmail4');
     await emailInput.fill(testData.email);
     
-    // Fill Password
-    const passwordInput = page.locator('input[name="password"]');
-    await passwordInput.fill(testData.password);
-    
-    // Fill Company
-    const companyInput = page.locator('input[name="company"]');
-    await companyInput.fill(testData.company);
-    
-    // Fill Website
-    const websiteInput = page.locator('input[name="website"]');
-    await websiteInput.fill(testData.website);
-    
-    // Fill City
-    const cityInput = page.locator('input[name="city"]');
-    await cityInput.fill(testData.city);
-    
-    // Fill Address 1
-    const address1Input = page.locator('input[name="address_line1"]');
-    await address1Input.fill(testData.address1);
-    
-    // Fill Address 2
-    const address2Input = page.locator('input[name="address_line2"]');
-    await address2Input.fill(testData.address2);
-    
-    // Fill State
-    const stateInput = page.locator('input[name="state"]');
-    await stateInput.fill(testData.state);
-    
-    // Fill Zip Code
-    const zipcodeInput = page.locator('input[name="zip"]');
-    await zipcodeInput.fill(testData.zipcode);
-    
     // Fill Phone
-    const phoneInput = page.locator('input[type="tel"]');
+    const phoneInput = page.locator('input#inputPhone');
     await phoneInput.fill(testData.phone);
     
     // Select Country from dropdown using text property
-    const countrySelect = page.locator('select[name="country"]');
+    const countrySelect = page.locator('select#selectnav');
     await countrySelect.selectOption({ label: testData.country });
     
     // Click Submit
