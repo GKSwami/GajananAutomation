@@ -15,8 +15,8 @@ test.describe('Scenario 3: Input Form Submit', () => {
     await page.goto(baseURL);
     
     // Step 2: Click "Input Form Submit"
-    // Locator 1: Using link text selector
-    await page.click('a:has-text("Input Form Submit")');
+    // Locator 1: Using href selector (more reliable)
+    await page.click('a[href="https://www.lambdatest.com/selenium-playground/input-form-demo"]');
     
     await page.waitForLoadState('networkidle');
     

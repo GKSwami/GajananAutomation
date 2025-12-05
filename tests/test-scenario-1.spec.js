@@ -9,20 +9,20 @@ test.describe('Scenario 1: Simple Form Demo', () => {
     await page.goto(baseURL);
     
     // Step 2: Click "Simple Form Demo"
-    // Locator 1: Using link text (first different locator)
-    await page.click('a:has-text("Simple Form Demo")');
+    // Locator 1: Using href attribute selector (direct link)
+    await page.click('a[href="https://www.lambdatest.com/selenium-playground/simple-form-demo"]');
     
     // Step 3: Validate URL contains "simple-form-demo"
     await expect(page).toHaveURL(/simple-form-demo/);
     console.log(`✓ URL validation passed: ${page.url()}`);
     
     // Step 4 & 5: Create variable and enter message in text box
-    // Locator 2: Using placeholder attribute selector (second different locator)
+    // Locator 2: Using placeholder attribute selector
     const messageInput = page.locator('input[placeholder="Please enter your Message"]');
     await messageInput.fill(testMessage);
     
     // Step 6: Click "Get Checked Value" button
-    // Locator 3: Using CSS class selector (third different locator)
+    // Locator 3: Using CSS class selector
     const getCheckButton = page.locator('button.btn-lg:has-text("Get Checked Value")');
     await getCheckButton.click();
     
