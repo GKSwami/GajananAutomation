@@ -5,8 +5,15 @@ test.describe('Scenario 3: Input Form Submit', () => {
   const testData = {
     name: 'John Doe',
     email: 'john.doe@example.com',
-    phone: '9876543210',
-    message: 'This is a test message',
+    // The live form does not have a phone or free-text message field as expected by the assignment,
+    // so we fill the available fields present in the form HTML below.
+    company: 'ACME Corp',
+    website: 'https://example.com',
+    city: 'New York',
+    address1: '123 Main St',
+    address2: 'Suite 100',
+    state: 'NY',
+    zip: '10001',
     country: 'United States',
   };
 
@@ -21,45 +28,42 @@ test.describe('Scenario 3: Input Form Submit', () => {
     await page.waitForLoadState('networkidle');
     
     // Step 3: Click Submit without filling any information
-    // Locator 2: Using CSS class and button text combination
-    const submitButton = page.locator('button:has-text("Submit")').first();
+    // Locator 2: Using the submit button class (selenium_btn) for clarity
+    const submitButton = page.locator('button.selenium_btn').first();
     await submitButton.click();
-    
-    // Step 4: Assert error message for Name field
-    const nameInput = page.locator('input[name="name"]');
+
+    // Step 4: Assert browser validation message for the Name field is present
+    const nameInput = page.locator('#name');
+    // reading validationMessage is the reliable browser-side message
     const validationMessage = await nameInput.evaluate((el) => el.validationMessage);
     console.log(`Validation message: ${validationMessage}`);
-    
-    // Step 5-6: Fill in all form fields
-    // Fill Name
+    // Expect a non-empty browser validation message
+    expect(validationMessage.length).toBeGreaterThan(0);
+
+    // Step 5-6: Fill in all form fields (use IDs from the provided HTML)
     await nameInput.fill(testData.name);
-    
-    // Locator 3: Using attribute selector for email input
-    const emailInput = page.locator('input[type="email"]');
-    await emailInput.fill(testData.email);
-    
-    // Fill Phone
-    const phoneInput = page.locator('input[type="tel"]');
-    await phoneInput.fill(testData.phone);
-    
-    // Fill Message
-    const messageInput = page.locator('textarea[name="message"]');
-    await messageInput.fill(testData.message);
-    
-    // Select Country from dropdown using text property
+    await page.locator('#inputEmail4').fill(testData.email);
+    await page.locator('#inputPassword4').fill('P@ssw0rd!');
+    await page.locator('#company').fill(testData.company);
+    await page.locator('#websitename').fill(testData.website);
+    await page.locator('#inputCity').fill(testData.city);
+    await page.locator('#inputAddress1').fill(testData.address1);
+    await page.locator('#inputAddress2').fill(testData.address2);
+    await page.locator('#inputState').fill(testData.state);
+    await page.locator('#inputZip').fill(testData.zip);
+
+    // Select Country from dropdown using label text
     const countrySelect = page.locator('select[name="country"]');
     await countrySelect.selectOption({ label: testData.country });
-    
+
     // Click Submit
     await submitButton.click();
-    
+
     // Step 7: Validate success message
-    const successMessage = page.locator(
-      'p:has-text("Thanks for contacting us, we will get back to you shortly.")'
-    );
+    const successMessage = page.locator('p.success-msg');
     await expect(successMessage).toBeVisible();
+    await expect(successMessage).toContainText('Thanks for contacting us, we will get back to you shortly.');
     console.log('✓ Form submitted successfully');
-    console.log('✓ Success message displayed: "Thanks for contacting us, we will get back to you shortly."');
   });
 
   test('should display error when submitting empty form', async ({ page }) => {

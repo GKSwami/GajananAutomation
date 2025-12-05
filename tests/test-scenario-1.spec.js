@@ -17,13 +17,13 @@ test.describe('Scenario 1: Simple Form Demo', () => {
     console.log(`✓ URL validation passed: ${page.url()}`);
     
     // Step 4 & 5: Create variable and enter message in text box
-    // Locator 2: Using placeholder attribute selector
-    const messageInput = page.locator('input[placeholder="Please enter your Message"]');
+    // Locator 2: Use the input id for determinism
+    const messageInput = page.locator('input#user-message');
     await messageInput.fill(testMessage);
-    
+
     // Step 6: Click "Get Checked Value" button
-    // Locator 3: Using CSS class selector
-    const getCheckButton = page.locator('button.btn-lg:has-text("Get Checked Value")');
+    // Locator 3: Use button id (showInput)
+    const getCheckButton = page.locator('button#showInput');
     await getCheckButton.click();
     
     // Step 7: Validate message appears in "Your Message:" section
