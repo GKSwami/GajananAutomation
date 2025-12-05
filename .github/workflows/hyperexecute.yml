@@ -1,0 +1,34 @@
+name: HyperExecute Tests - Parallel Execution
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  hyperexecute:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download HyperExecute CLI
+        run: |
+          wget https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
+          chmod +x hyperexecute
+          
+      - name: Run tests on HyperExecute
+        env:
+          LAMBDA_USERNAME: ${{ secrets.LAMBDA_USERNAME }}
+          LAMBDA_ACCESS_KEY: ${{ secrets.LAMBDA_ACCESS_KEY }}
+        run: |
+          ./hyperexecute --config .hyperexecute-parallel.yaml \
+            --verbose \
+            --display-logs
+
+      - name: Extract Job ID
+        if: always()
+        run: |
+          echo "HyperExecute Job Completed"
+          echo "Check HyperExecute dashboard for Job ID and results"
+          echo "Artifacts available at: https://hyperexecute.lambdatest.com/artifacts"

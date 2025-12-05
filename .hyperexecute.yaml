@@ -1,0 +1,73 @@
+---
+version: 0.1
+
+# Name of the project
+projectName: LambdaTest Playwright Automation
+jobName: Playwright E2E Tests
+
+# HyperExecute will automatically install all dependencies using npm ci
+runson: ${RunOn}
+concurrency: 2
+
+# Global variables and environment variables
+env:
+  NODE_ENV: production
+  DEBUG: "pw:api"
+
+# Secret management - using LambdaTest credentials
+secrets:
+  - LAMBDA_USERNAME
+  - LAMBDA_ACCESS_KEY
+
+# Pre-steps to execute before tests
+pre:
+  - echo "Installing dependencies..."
+  - npm ci
+  - echo "Dependencies installed successfully"
+
+# Command to run tests
+testRunnerCommand: npm test
+
+# Post-steps to execute after tests
+post:
+  - echo "Test execution completed"
+  - echo "Collecting artifacts..."
+
+# Dependency caching
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+  - node_modules
+
+# Artifacts management - collect reports, videos, and logs
+artifactRepositoryName: LambdaTest-Playwright-Reports
+artifacts:
+  - location: ./playwright-reports
+    name: HTML Report
+  - location: ./test-results.json
+    name: JSON Report
+  - location: ./junit-results.xml
+    name: JUnit Report
+  - location: ./blob-report
+    name: Blob Report
+
+# Parallelize tests on different browser/OS combinations
+matrix:
+  os: ["windows", "linux"]
+  browser: ["chromium", "firefox"]
+
+# Environment variable injection
+envConfig:
+  ENVIRONMENT: production
+  REPORT_PATH: ./playwright-reports
+  VIDEO_ENABLED: "true"
+  SCREENSHOT_ENABLED: "true"
+
+# GitHub Actions integration (optional)
+# trigger: github
+
+# Log collection settings
+logs:
+  - location: ./logs
+    name: Application Logs
+  - location: ./console.log
+    name: Console Logs

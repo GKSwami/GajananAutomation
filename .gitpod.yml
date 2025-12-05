@@ -1,0 +1,34 @@
+tasks:
+  - name: Setup & Install Dependencies
+    init: |
+      npm install
+      echo "✓ Dependencies installed"
+      npm run test:report
+      echo "✓ Initial test run completed"
+    command: |
+      echo "Workspace ready for testing"
+      echo "Run 'npm test' to execute all tests"
+      echo "Run 'npm run test:local' to run tests in headed mode"
+
+vscode:
+  extensions:
+    - ms-playwright.playwright@1.0.4
+    - eamodio.gitlens@14.10.0
+    - esbenp.prettier-vscode@10.1.0
+    - dbaeumer.vscode-eslint@2.4.2
+    - ms-vscode.makefile-tools@0.6.0
+
+ports:
+  - port: 3000
+    onOpen: ignore
+  - port: 9323
+    onOpen: ignore
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: false
+    addComment: false
+    addBadge: true

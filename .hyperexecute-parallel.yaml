@@ -1,0 +1,83 @@
+---
+version: 0.1
+
+# Alternate HyperExecute config with more detailed parallel setup
+projectName: LambdaTest Playwright Automation - Windows & Linux
+jobName: Parallel E2E Tests
+
+# Run on specified OS (will be overridden by matrix)
+runson: ${RunOn}
+
+# Maximum 2 concurrent test executions
+concurrency: 2
+
+# Environment variables
+env:
+  NODE_ENV: production
+  CI: "true"
+  REPORT_PATH: "./playwright-reports"
+  LOG_LEVEL: "info"
+
+# Secret management for credentials
+secrets:
+  - LAMBDA_USERNAME
+  - LAMBDA_ACCESS_KEY
+  - TEST_USER_EMAIL
+  - TEST_USER_PASSWORD
+
+# Pre-execution steps
+pre:
+  - echo "Starting test setup..."
+  - npm ci --prefer-offline --no-audit
+  - echo "Setup completed"
+
+# Main test execution
+testRunnerCommand: npm test
+
+# Post-execution steps (optional)
+post:
+  - echo "Generating final reports..."
+  - ls -la ./playwright-reports || echo "Reports directory not found"
+
+# Dependency caching for faster builds
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+  - node_modules
+
+# Artifact management - collecting test artifacts
+artifactRepositoryName: LambdaTest-Playwright-Results
+artifacts:
+  - location: ./playwright-reports/**
+    name: Playwright HTML Reports
+  - location: ./test-results.json
+    name: Test Results JSON
+  - location: ./junit-results.xml
+    name: JUnit XML Report
+  - location: ./blob-report/**
+    name: Blob Reports
+
+# Matrix for parallel execution on different browser/OS combinations
+matrix:
+  os: ["windows-10", "linux"]
+  browser: ["chromium", "firefox"]
+
+# Inject environment variables at runtime
+envConfig:
+  SCREENSHOT_ENABLED: "true"
+  VIDEO_ENABLED: "true"
+  TRACE_ENABLED: "true"
+  TIMEOUT: "30000"
+
+# Health check URL (if applicable)
+# healthCheck:
+#   url: "https://www.lambdatest.com/selenium-playground"
+#   interval: 5000
+#   retries: 3
+
+# Report generation
+reports:
+  - name: "Playwright Report"
+    location: ./playwright-reports
+
+# Trigger from GitHub Actions (optional)
+# trigger: github
